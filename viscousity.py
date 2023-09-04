@@ -2,23 +2,12 @@ import numpy as np
 import cv2 as cv
 
 def find_y(contour):
-    y = np.array([])
-    row , column = contour.shape
-    for j in range(column):
-        for i in range(row-1 , -1 ,-1):
-            if contour[i,j] == 255:
-                y = np.append(y,i)
-                break
-            elif i == 0:
-                y = np.append(y,0)
-    return y
+    flipedContour = np.flipud(contour) #Flip the contour matrix
+    return np.argmax(flipedContour , axis= 0) # findout max value of fliped contour matrix
+   
 
 def find_du_dx(u):
-    du_dx = np.array([])
-    if u is not None:
-        for i in range(1 , len(u)):
-            du_dx = np.append(du_dx, u[i] - u[i-1] )
-    return du_dx
+    return np.diff(u)
 
     
 if __name__ == '__main__':
